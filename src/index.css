@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Chai-Retes — único tema (siempre oscuro) */
+    --background: 0 0% 4%;          /* #0B0B0B */
+    --foreground: 0 0% 100%;       /* #FFFFFF */
+    --card: 0 0% 8%;               /* #141414 */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 4 78% 48%;          /* #DA261B rojo de marca */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 12%;         /* #1F1F1F */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 64%;  /* gris claro para texto secundario */
+
+    --accent: 46 78% 80%;          /* #F4E1A4 crema */
+    --accent-foreground: 0 0% 4%;  /* texto oscuro sobre crema */
+
+    --destructive: 0 72% 52%;      /* rojo shadcn para errores de validación */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;            /* #333333 */
+    --input: 0 0% 20%;
+    --ring: 4 78% 48%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 4 78% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 4 78% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ----------------------------------------------------------------------
+   Chai-Retes: textura de grano + bordes rasgados (SVG/clip-path, sin imágenes)
+   ---------------------------------------------------------------------- */
+
+@layer components {
+  /* Grano sutil detrás del contenido de una sección.
+     Se aplica a la sección; el pseudo-elemento va detrás del contenido. */
+  .bg-noise {
+    position: relative;
+    isolation: isolate;
+  }
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 140px 140px;
+  }
+
+  /* Borde inferior rasgado (zig-zag de 12px). Aplicar a secciones con padding >= 48px. */
+  .torn-edge-bottom {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - 12px),
+      94% 100%,
+      88% calc(100% - 12px),
+      82% 100%,
+      76% calc(100% - 12px),
+      70% 100%,
+      64% calc(100% - 12px),
+      58% 100%,
+      52% calc(100% - 12px),
+      46% 100%,
+      40% calc(100% - 12px),
+      34% 100%,
+      28% calc(100% - 12px),
+      22% 100%,
+      16% calc(100% - 12px),
+      10% 100%,
+      4% calc(100% - 12px),
+      0 100%
+    );
+  }
+
+  /* Borde superior rasgado (zig-zag de 12px). */
+  .torn-edge-top {
+    clip-path: polygon(
+      0 12px,
+      4% 0,
+      10% 12px,
+      16% 0,
+      22% 12px,
+      28% 0,
+      34% 12px,
+      40% 0,
+      46% 12px,
+      52% 0,
+      58% 12px,
+      64% 0,
+      70% 12px,
+      76% 0,
+      82% 12px,
+      88% 0,
+      94% 12px,
+      100% 0,
+      100% 100%,
+      0 100%
+    );
+  }
+
+  /* Mismo efecto rasgado para tarjetas pequeñas (polaroids, etc.) */
+  .torn-card {
+    clip-path: polygon(
+      0 6px, 3% 0, 8% 6px, 13% 0, 18% 6px, 23% 0, 28% 6px, 33% 0, 38% 6px, 43% 0, 48% 6px, 53% 0, 58% 6px, 63% 0, 68% 6px, 73% 0, 78% 6px, 83% 0, 88% 6px, 93% 0, 100% 6px,
+      100% calc(100% - 6px),
+      93% 100%, 88% calc(100% - 6px), 83% 100%, 78% calc(100% - 6px), 73% 100%, 68% calc(100% - 6px), 63% 100%, 58% calc(100% - 6px), 53% 100%, 48% calc(100% - 6px), 43% 100%, 38% calc(100% - 6px), 33% 100%, 28% calc(100% - 6px), 23% 100%, 18% calc(100% - 6px), 13% 100%, 8% calc(100% - 6px), 3% 100%, 0 calc(100% - 6px)
+    );
+  }
+}
+
+/* Rayos decorativos: rotación lenta */
+@keyframes chai-spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: chai-spin-slow 28s linear infinite;
+}
+
+@keyframes chai-flicker {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
+}
+.animate-flicker {
+  animation: chai-flicker 4s ease-in-out infinite;
+}
+
+/* Accesibilidad: respetar usuarios que reducen el movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-spin-slow,
+  .animate-flicker,
+  .animate-pulse {
+    animation: none !important;
+  }
+}
