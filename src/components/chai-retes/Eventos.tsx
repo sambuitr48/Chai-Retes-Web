@@ -23,7 +23,7 @@ type EventItem = {
 };
 
 const EVENTS: EventItem[] = [
-  // TODO: confirmar año. El flyer dice 17 de mayo, no 15 — ajustado acá al flyer real.
+  
   {
     date: "2025-05-17",
     city: "Armenia",
@@ -31,7 +31,7 @@ const EVENTS: EventItem[] = [
     time: "6:00 PM",
     flyer: "/photos/MATINÉE 7.webp",
   },
-  // TODO: confirmar año.
+
   {
     date: "2025-10-04",
     city: "Armenia",
@@ -39,14 +39,23 @@ const EVENTS: EventItem[] = [
     time: "9:30 PM",
     flyer: "/photos/FESTJUV.jpeg",
   },
-  // TODO: confirmar año — no tengo dato previo de este toque.
+  
   {
     date: "2026-08-15",
-    city: "Armenia",
+    city: "Armenia (Cancelado)",
     venue: "Century",
     time: "9:00 PM",
     flyer: "/photos/porsinosvolvemosaver.jpeg",
   },
+
+  {
+    date: "2026-09-12",
+    city: "Armenia",
+    venue: "Century",
+    time: "8:00 PM",
+    flyer: "/photos/EarthquakeTour.jpeg",
+  },
+
 ];
 
 function parseEventDate(iso: string) {
