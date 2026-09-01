@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import "./i18n/config";
+import { Analytics } from "@vercel/analytics/react";
 import { bootstrapGeneratedSiteAnalytics } from "./analytics.ts";
 import App from "./App.tsx";
 import "./index.css";
@@ -12,4 +13,9 @@ if (!container) {
 
 bootstrapGeneratedSiteAnalytics();
 
-createRoot(container).render(<App />);
+createRoot(container).render(
+  <>
+    <App />
+    <Analytics />
+  </>
+);
